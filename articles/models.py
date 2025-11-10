@@ -12,3 +12,10 @@ class Article(models.Model):
     date = models.DateTimeField(auto_now_add=True) #os parametros dessa funcao fazem com que seja automaticmente preenchida a data e hora ao criar o objeto
     #thumb
     #author
+
+    def __str__(self): #Esta funcao serve para que quando recuperarmos o objeto Article do banco de dados seja exibido o titulo ao inves do objeto, tornando-o mais facilmente identificado
+        return self.title
+    
+    def snippet(self):#limita o tamanho que o body vai ter na lista de artigos aos 50 primeiros caracteres + a string ... no final. Funcao chamada no article_list.html
+        return self.body[:50] + '...'
+    

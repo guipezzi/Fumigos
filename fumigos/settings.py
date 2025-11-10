@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -79,7 +80,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
+STATICFILES_DIRS = [ #Especifica o diretório em que os assets estaticos estao salvos
+    BASE_DIR / "assets",
+]
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

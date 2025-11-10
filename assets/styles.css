@@ -1,0 +1,50 @@
+body {
+    background: #f0f6ff;
+    background-image: url(/static/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #0d1b2a;
+    margin: 0;
+}
+
+body * {
+    font-family: Ubuntu, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: normal;
+    margin: 0;
+    color: #0a2342;
+}
+
+a,
+a:hover,
+a:visited {
+    color: #0a2342;
+    text-decoration: none;
+}
+
+.articles {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 30px;
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.article {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article:last-child {
+    margin-bottom: 0;
+}

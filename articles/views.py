@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .models import Article
 
 def article_list(request):
-    return render(request, 'articles/article_list.html' ) #Renderiza o template da lista de artigos
+    articles = Article.objects.all().order_by('date') #Recupera todos os objetos de artigos ordenados por data
+    return render(request, 'articles/article_list.html', {'articles':articles} ) #Renderiza o template da lista de artigos e associa a variavel artigos
+    

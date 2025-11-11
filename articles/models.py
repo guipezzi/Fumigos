@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify  # usado para gerar slug automaticamente
 
 '''Nesta classe serao armazenados os models, itens presentes no banco de dados
 Cada um de seus atributos sera uma caraceteristica que esse item tera.
@@ -7,15 +8,25 @@ slug por exemplo'''
 
 class Article(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField() #slug se refere a parte legivel da url
+    slug = models.SlugField(unique=True, blank=True)  # slug se refere a parte legivel da url
     body = models.TextField()
-    date = models.DateTimeField(auto_now_add=True) #os parametros dessa funcao fazem com que seja automaticmente preenchida a data e hora ao criar o objeto
+    date = models.DateTimeField(auto_now_add=True)  
+    #os parametros dessa funcao fazem com que seja automaticmente preenchida a data e hora ao criar o objeto
     #thumb
     #author
 
-    def __str__(self): #Esta funcao serve para que quando recuperarmos o objeto Article do banco de dados seja exibido o titulo ao inves do objeto, tornando-o mais facilmente identificado
+    def __str__(self):
+        # Esta funcao serve para que quando recuperarmos o objeto Article do banco de dados
+        # seja exibido o titulo ao inves do objeto, tornando-o mais facilmente identificado
         return self.title
     
-    def snippet(self):#limita o tamanho que o body vai ter na lista de artigos aos 50 primeiros caracteres + a string ... no final. Funcao chamada no article_list.html
+    def snippet(self):
+        # limita o tamanho que o body vai ter na lista de artigos aos 50 primeiros caracteres
+        # + a string ... no final. Funcao chamada no article_list.html
         return self.body[:50] + '...'
-    
+
+    def save(self, *args, **kwargs):
+        # gera o slug automaticamente caso esteja vazio
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)

@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'articles', #registro do aplicativo que criamos "articles"
+    'accounts', #registro do aplicativo de registro de contas nativo do django
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [ #Especifica o diretório em que os assets estaticos estao salvos
     BASE_DIR / "assets",
 ]
+
+MEDIA_URL = '/media/' #Especifica em qual pasta ficarão armazenados os arquivos de mídia
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #Especifica em qual diretorio serao upados as midias
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

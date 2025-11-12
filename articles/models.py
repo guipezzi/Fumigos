@@ -11,9 +11,8 @@ class Article(models.Model):
     slug = models.SlugField(unique=True, blank=True)  # slug se refere a parte legivel da url
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)  
+    thumb = models.ImageField(default='default.png', blank=True)
     #os parametros dessa funcao fazem com que seja automaticmente preenchida a data e hora ao criar o objeto
-    #thumb
-    #author
 
     def __str__(self):
         # Esta funcao serve para que quando recuperarmos o objeto Article do banco de dados
@@ -30,3 +29,4 @@ class Article(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+ 

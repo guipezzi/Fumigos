@@ -1,50 +1,65 @@
-body {
-    background: #f0f6ff;
-    background-image: url(/static/bg.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #0d1b2a;
-    margin: 0;
+/* ======= HEADER ======= */
+.header {
+    background: linear-gradient(90deg, #0077b6, #0096c7);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-body * {
-    font-family: Ubuntu, sans-serif;
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-weight: normal;
-    margin: 0;
-    color: #0a2342;
+/* ======= BLOCO DA MARCA ======= */
+.brand-box {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-a,
-a:hover,
-a:visited {
-    color: #0a2342;
+.site-title a {
+    color: #0077b6;
+    font-weight: 700;
+    font-size: 1.5rem;
     text-decoration: none;
 }
 
-.articles {
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 30px;
-    border-radius: 16px;
-    backdrop-filter: blur(6px);
-    max-width: 900px;
-    margin: 20px auto;
+.site-subtitle {
+    color: #333;
+    font-size: 0.85rem;
+    margin-top: 4px;
 }
 
-.article {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+/* ======= BLOCO DE NAVEGAÇÃO ======= */
+.nav-box {
+    background: #ffffff;
+    padding: 10px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
-.article:last-child {
-    margin-bottom: 0;
+.nav-box a {
+    color: #0077b6;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-box a:hover {
+    color: #005f8d;
+    transform: scale(1.05);
 }

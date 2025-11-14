@@ -11,7 +11,11 @@ def signup_view(request):
             user = form.save()
             #logar o usuario apos cadastro
             login(request, user)
-            return redirect('articles:list')
+            #Redireciona para a página que o usuário tentou acessar originalmente, ou para a lista de artigos
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('articles:list')
     #Para requisicoes GET
     else:
         form = UserCreationForm()
@@ -26,6 +30,10 @@ def login_view(request):
             #logar o usuario
             user = form.get_user()
             login(request, user)
+            # Redireciona para a página que o usuário tentou acessar originalmente, ou para a lista de artigos
+            next_url = request.GET.get('next', None)
+            if next_url:
+                return redirect(next_url)
             return redirect('articles:list')
     #Para requisicoes GET
     else:

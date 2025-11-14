@@ -5,5 +5,6 @@ app_name = 'articles'
 
 urlpatterns = [
     path('', views.article_list, name="list"), #URL da lista de artigos
+    path('create/', views.article_create, name="create"), #URL para criar um novo artigo
     path('<slug:slug>/', views.article_detail, name="detail"), #URL individual de cada artigo
-]
+    ]

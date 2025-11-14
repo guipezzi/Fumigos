@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify  # usado para gerar slug automaticamente
+from django.contrib.auth.models import User
 
 '''Nesta classe serao armazenados os models, itens presentes no banco de dados
 Cada um de seus atributos sera uma caraceteristica que esse item tera.
@@ -12,6 +13,7 @@ class Article(models.Model):
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)  
     thumb = models.ImageField(default='default.png', blank=True)
+    author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
     #os parametros dessa funcao fazem com que seja automaticmente preenchida a data e hora ao criar o objeto
 
     def __str__(self):

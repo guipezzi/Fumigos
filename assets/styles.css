@@ -1,65 +1,158 @@
-/* ======= HEADER ======= */
-.header {
-    background: linear-gradient(90deg, #0077b6, #0096c7);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    padding: 12px 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+body {
+    background-color: teal;
+    background-image: url(/static/bg.jpg);
+    background-repeat: no-repeat;
+    color: black;
 }
 
-.header-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1100px;
+body * {
+    font-family: Ubuntu;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: normal;
+    margin: 0;
+}
+
+a,
+a:hover,
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.wrapper {
+    max-width: 960px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
-/* ======= BLOCO DA MARCA ======= */
-.brand-box {
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 10px 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+div .wrapper h1 {
+    text-align: center;
+    margin: 100px;
+    font-size: 2.4em;
 }
 
-.site-title a {
-    color: #0077b6;
-    font-weight: 700;
-    font-size: 1.5rem;
-    text-decoration: none;
+header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px 0;
 }
 
-.site-subtitle {
-    color: #333;
-    font-size: 0.85rem;
-    margin-top: 4px;
+nav {
+    justify-self: end;
 }
 
-/* ======= BLOCO DE NAVEGAÇÃO ======= */
-.nav-box {
-    background: #ffffff;
-    padding: 10px 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 25px;
+nav li {
+    display: inline-block;
+    margin-left: 20px;
 }
 
-.nav-box a {
-    color: #0077b6;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+nav button {
+    background: none;
+    color: white;
+    cursor: pointer;
+    border: 0;
+    font-size: 1em;
 }
 
-.nav-box a:hover {
-    color: #005f8d;
-    transform: scale(1.05);
+.articles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+}
+
+.article {
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(157, 195, 202, 0.815);
+    border-radius: 12px;
+    position: relative;
+    padding-bottom: 40px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.article h2 {
+    font-size: 1.2 em;
+}
+
+.article-detail .article {
+    padding: 0;
+}
+
+.article-detail .artigle img {
+    max-width: 100%
+}
+
+.article-detail .article h2 {
+    text-align: center;
+    margin: 20px auto;
+    font-size: 2em;
+}
+
+.article .author {
+    padding: 10px;
+    background: lightblue;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    margin: 0;
+    color: black
+}
+
+.article-detail .article p {
+    padding: 0;
+}
+
+.site-form {
+    margin-top: 60px;
+    border: 1px solid blue;
+    padding: 20px;
+}
+
+.site-form input,
+.site-form textarea {
+    display: block;
+    margin: 20px 0 0 0;
+    padding: 10px;
+}
+
+a.highlight {
+    border: 1px solid blue;
+    padding: 10px;
+    border-radius: 4px;
+    color: blue;
+}
+
+.helptext,
+.helptext ul {
+    margin: 0 auto 20px;
+    color: darkblue;
+    font-size: 0.9em;
+    display: block;
+}
+
+.errorlist li {
+    padding: 10px;
+    list-style-type: none;
+    border: 1px solid red;
+    color: red;
+    margin: 10px 0;
+}
+
+.errorlist {
+    padding: 0;
+}
+
+.site-form input[type="submit"] {
+    background: teal;
+    border: 0;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 4px;
+    margin: 10px 0;
 }

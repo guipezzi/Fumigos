@@ -2,10 +2,6 @@ administrador:
 login: admin
 password: admin
 
-usuario 1: 
-login: MiguelJefferson
-password:BillieJean123
-
-usuario 2:
-login: Teste2Teste
-password: Teste2Fumigos
+usuario1:
+login: MarkZuck
+senha: Facebook1234

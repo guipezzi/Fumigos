@@ -9,6 +9,7 @@
           {{ article.title }}</a></h2>
         <p>{{ article.snippet }}</p>
         <p><small>{{ article.date }}</small></p>
+        <p class="author"> Criado por {{ article.author.username }} </p>
       </div>
     {% endfor %} 
   </div>

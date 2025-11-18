@@ -4,7 +4,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse
 from articles.models import Article
-
+from .forms import ProfileEditForm
+from django.contrib.auth.decorators import login_required
 
 def signup_view(request):
     if request.method == 'POST':
@@ -15,7 +16,7 @@ def signup_view(request):
 
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
-            return redirect('articles:list')
+            return redirect("accounts:profile", username=user.username)
     else:
         form = UserCreationForm()
 
@@ -57,4 +58,23 @@ def profile_view(request, username):
         "profile": profile,
         "user_obj": user_obj,
         "articles": articles
+    })
+
+
+@login_required
+def edit_profile_view(request):
+    profile = request.user.profile
+
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            form.save()
+            return redirect(f'/accounts/profile/{request.user.username}/')
+
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'accounts/edit_profile.html', {
+        'form': form
     })

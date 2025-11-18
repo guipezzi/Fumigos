@@ -1,14 +1,229 @@
-{% extends 'base_layout.html' %} {% block content %}
-<div class="article-create">
-  <h2>Criar um novo artigo</h2>
-  <form
-    class="site-form"
-    action="{% url 'articles:create' %}"
-    method="post"
-    enctype="multipart/form-data"
-  >
-    {% csrf_token %} {{ form }}
-    <input type="submit" value="Criar" />
-  </form>
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 col-xl-7">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold mb-2">Criar Novo Artigo</h1>
+                <p class="text-muted">Compartilhe seu conhecimento com a comunidade</p>
+            </div>
+
+            <!-- Card do Formulário -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4 p-md-5">
+                    <form action="{% url 'articles:create' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Título -->
+                        <div class="mb-4">
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-semibold">
+                                Título do Artigo
+                                {% if form.title.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <input type="text" 
+                                   name="{{ form.title.name }}"
+                                   class="form-control form-control-lg {% if form.title.errors %}is-invalid{% endif %}"
+                                   id="{{ form.title.id_for_label }}"
+                                   placeholder="Digite um título atraente..."
+                                   value="{{ form.title.value|default:'' }}"
+                                   {% if form.title.field.required %}required{% endif %}>
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.title.errors.0 }}
+                                </div>
+                            {% endif %}
+                            {% if form.title.help_text %}
+                                <div class="form-text">{{ form.title.help_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Slug (se existir) -->
+                        {% if form.slug %}
+                        <div class="mb-4">
+                            <label for="{{ form.slug.id_for_label }}" class="form-label fw-semibold">
+                                Slug (URL)
+                                {% if form.slug.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <input type="text" 
+                                   name="{{ form.slug.name }}"
+                                   class="form-control {% if form.slug.errors %}is-invalid{% endif %}"
+                                   id="{{ form.slug.id_for_label }}"
+                                   placeholder="url-amigavel-do-artigo"
+                                   value="{{ form.slug.value|default:'' }}"
+                                   {% if form.slug.field.required %}required{% endif %}>
+                            {% if form.slug.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.slug.errors.0 }}
+                                </div>
+                            {% endif %}
+                            {% if form.slug.help_text %}
+                                <div class="form-text">{{ form.slug.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Conteúdo -->
+                        <div class="mb-4">
+                            <label for="{{ form.body.id_for_label }}" class="form-label fw-semibold">
+                                Conteúdo
+                                {% if form.body.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <textarea name="{{ form.body.name }}"
+                                      class="form-control {% if form.body.errors %}is-invalid{% endif %}"
+                                      id="{{ form.body.id_for_label }}"
+                                      rows="12"
+                                      placeholder="Escreva o conteúdo do seu artigo..."
+                                      {% if form.body.field.required %}required{% endif %}>{{ form.body.value|default:'' }}</textarea>
+                            {% if form.body.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.body.errors.0 }}
+                                </div>
+                            {% endif %}
+                            {% if form.body.help_text %}
+                                <div class="form-text">{{ form.body.help_text }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Imagem de Capa (se existir) -->
+                        {% if form.thumb %}
+                        <div class="mb-4">
+                            <label for="{{ form.thumb.id_for_label }}" class="form-label fw-semibold">
+                                Imagem de Capa
+                                {% if form.thumb.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+                            <input type="file" 
+                                   name="{{ form.thumb.name }}"
+                                   class="form-control {% if form.thumb.errors %}is-invalid{% endif %}"
+                                   id="{{ form.thumb.id_for_label }}"
+                                   accept="image/*"
+                                   {% if form.thumb.field.required %}required{% endif %}>
+                            {% if form.thumb.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.thumb.errors.0 }}
+                                </div>
+                            {% endif %}
+                            {% if form.thumb.help_text %}
+                                <div class="form-text">{{ form.thumb.help_text }}</div>
+                            {% else %}
+                                <div class="form-text">Formatos aceitos: JPG, PNG, GIF (máx. 5MB)</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Outros campos do formulário -->
+                        {% for field in form %}
+                            {% if field.name != 'title' and field.name != 'slug' and field.name != 'body' and field.name != 'thumb' %}
+                                <div class="mb-4">
+                                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                                        {{ field.label }}
+                                        {% if field.field.required %}
+                                            <span class="text-danger">*</span>
+                                        {% endif %}
+                                    </label>
+                                    
+                                    {% if field.field.widget.input_type == 'checkbox' %}
+                                        <div class="form-check">
+                                            <input type="checkbox" 
+                                                   name="{{ field.name }}"
+                                                   class="form-check-input {% if field.errors %}is-invalid{% endif %}"
+                                                   id="{{ field.id_for_label }}"
+                                                   {% if field.value %}checked{% endif %}>
+                                            <label class="form-check-label" for="{{ field.id_for_label }}">
+                                                {{ field.label }}
+                                            </label>
+                                        </div>
+                                    {% elif field.field.widget.input_type == 'select' %}
+                                        <select name="{{ field.name }}"
+                                                class="form-select {% if field.errors %}is-invalid{% endif %}"
+                                                id="{{ field.id_for_label }}"
+                                                {% if field.field.required %}required{% endif %}>
+                                            {{ field }}
+                                        </select>
+                                    {% else %}
+                                        <input type="{{ field.field.widget.input_type }}"
+                                               name="{{ field.name }}"
+                                               class="form-control {% if field.errors %}is-invalid{% endif %}"
+                                               id="{{ field.id_for_label }}"
+                                               value="{{ field.value|default:'' }}"
+                                               {% if field.field.required %}required{% endif %}>
+                                    {% endif %}
+                                    
+                                    {% if field.errors %}
+                                        <div class="invalid-feedback">
+                                            {{ field.errors.0 }}
+                                        </div>
+                                    {% endif %}
+                                    {% if field.help_text %}
+                                        <div class="form-text">{{ field.help_text }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Botões de Ação -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-5">
+                            <a href="{% url 'articles:list' %}" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5">
+                                <i class="bi bi-check-circle me-2"></i>Publicar Artigo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Dica útil -->
+            <div class="alert alert-info mt-4 border-0" role="alert">
+                <div class="d-flex">
+                    <div class="flex-shrink-0">
+                        <i class="bi bi-lightbulb fs-4"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="alert-heading mb-1">Dica</h6>
+                        <small>Use títulos descritivos e conteúdo bem formatado para aumentar o engajamento dos leitores.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .card {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 200px;
+    }
+</style>
 {% endblock %}

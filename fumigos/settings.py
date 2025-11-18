@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'articles', #registro do aplicativo que criamos "articles"
     'accounts', #registro do aplicativo de registro de contas nativo do django
-]
+]   
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

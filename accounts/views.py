@@ -6,6 +6,8 @@ from django.urls import reverse
 from articles.models import Article
 from .forms import ProfileEditForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 def signup_view(request):
     if request.method == 'POST':
@@ -77,4 +79,40 @@ def edit_profile_view(request):
 
     return render(request, 'accounts/edit_profile.html', {
         'form': form
+    })
+
+def search_view(request):
+    """
+    Busca perfis por username ou display_name.
+    Query string: ?q=texto
+    Mostra perfis encontrados e, para cada perfil, alguns artigos recentes.
+    """
+    q = request.GET.get('q', '').strip()
+
+    results = []
+    page_obj = None
+
+    if q:
+        users_qs = User.objects.filter(
+            Q(username__icontains=q) |
+            Q(profile__display_name__icontains=q)
+        ).distinct().order_by('username')
+
+        paginator = Paginator(users_qs, 20)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        results = []
+        for user in page_obj:
+            recent_articles = Article.objects.filter(author=user).order_by('-date')[:3]
+            results.append({
+                'user': user,
+                'profile': getattr(user, 'profile', None),
+                'recent_articles': recent_articles
+            })
+
+    return render(request, 'accounts/search_results.html', {
+        'query': q,
+        'results': results,
+        'page_obj': page_obj
     })

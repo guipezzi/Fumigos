@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
 
 #Funcao de Cadastro
 def signup_view(request):
@@ -45,4 +47,19 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return redirect('articles:list')
-    
+
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
+from articles.models import Article  # IMPORTANTE
+
+def profile_view(request, username):
+    user_obj = get_object_or_404(User, username=username)
+    profile = user_obj.profile
+    artigos = Article.objects.filter(author=user_obj).order_by('-date')
+
+    return render(request, "accounts/profile.html", {
+        "profile": profile,
+        "user_obj": user_obj,
+        "artigos": artigos
+    })
+

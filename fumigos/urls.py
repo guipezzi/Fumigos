@@ -12,6 +12,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),
     path('about/', core_views.about, name='about'),
+    path('comments/', include('comments.urls', namespace='comments')),
     path('', accounts_views.login_view, name="home"),
 ]
 

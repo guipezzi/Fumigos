@@ -16,8 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'articles', #registro do aplicativo que criamos "articles"
-    'accounts', #registro do aplicativo de registro de contas nativo do django
+    'articles',
+    'accounts', 
+    'comments'
 ]   
 
 MIDDLEWARE = [

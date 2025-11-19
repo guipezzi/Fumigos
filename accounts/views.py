@@ -8,6 +8,7 @@ from .forms import ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.views.decorators.cache import never_cache
 
 def signup_view(request):
     if request.method == 'POST':
@@ -51,7 +52,11 @@ def logout_view(request):
     return redirect('accounts:login')
 
 
+@never_cache
 def profile_view(request, username):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+    
     user_obj = get_object_or_404(User, username=username)
     profile = user_obj.profile
     articles = Article.objects.filter(author=user_obj).order_by('-date')
@@ -63,8 +68,12 @@ def profile_view(request, username):
     })
 
 
+@never_cache
 @login_required
 def edit_profile_view(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+
     profile = request.user.profile
 
     if request.method == 'POST':
@@ -81,12 +90,18 @@ def edit_profile_view(request):
         'form': form
     })
 
+@never_cache
+@login_required
 def search_view(request):
     """
     Busca perfis por username ou display_name.
     Query string: ?q=texto
     Mostra perfis encontrados e, para cada perfil, alguns artigos recentes.
     """
+
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+    
     q = request.GET.get('q', '').strip()
 
     results = []

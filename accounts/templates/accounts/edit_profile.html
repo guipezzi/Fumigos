@@ -1,0 +1,28 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="mb-4">Editar Perfil</h3>
+
+    <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Nome de exibição</label>
+            {{ form.display_name }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Bio</label>
+            {{ form.bio }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Avatar</label><br>
+            {{ form.avatar }}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Salvar Alterações</button>
+    </form>
+</div>
+{% endblock %}

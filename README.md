@@ -46,3 +46,5 @@ Rode o servidor Django
 ```bash
     python manage.py runserver
 ```
+Para documentação completa desse projeto, acesse:
+https://docs.google.com/document/d/1fZe_5KokXkWrhciLQOxhWkpIzTpm5L0HmICWvV2NivM/edit?tab=t.0

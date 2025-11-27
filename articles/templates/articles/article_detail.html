@@ -1,13 +1,67 @@
 {% extends 'base_layout.html' %}
+{% load static %}
 {% block content %}
-<div class="article-detail">
-    <div class = "article">
-        <img src="{{ article.thumb.url }}">
-        <p></p>
-        <h2> {{ article.title }} </h2>
-        <p> {{ article.body }}</p>
-        <p> {{ article.date }} </p>
+<div class="article-detail container mt-4">
+    <div class="article mb-5">
+        {% if article.thumb %}
+        <img src="{{ article.thumb.url }}" class="img-fluid mb-3">
+        {% endif %}
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.body }}</p>
+        <small class="text-muted">{{ article.date }}</small>
+    </div>
+
+    <hr>
+
+    <div class="comments-section mt-4">
+        <h4>Comentários</h4>
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'comments:add_comment' article.id %}" method="POST" class="mb-4">
+            {% csrf_token %}
+            <div class="mb-3">
+                <textarea name="content" class="form-control" placeholder="Adicione um comentário..." required></textarea>
+            </div>
+            <input type="hidden" name="parent_id" value="">
+            <button type="submit" class="btn btn-primary">Comentar</button>
+        </form>
+        {% else %}
+        <p><a href="{% url 'accounts:login' %}">Faça login</a> para comentar.</p>
+        {% endif %}
+
+        {% for comment in root_comments %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>{{ comment.author.username }}</strong> <small class="text-muted">{{ comment.created_at }}</small></p>
+                <p>{{ comment.content }}</p>
+
+                {% if user.is_authenticated %}
+                <!-- Form para responder -->
+                <form action="{% url 'comments:add_comment' article.id %}" method="POST" class="mt-2">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <textarea name="content" class="form-control" placeholder="Responder..." required></textarea>
+                    </div>
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <button type="submit" class="btn btn-sm btn-secondary">Responder</button>
+                </form>
+                {% endif %}
+
+                <!-- Respostas -->
+                {% for reply in comment.replies.all %}
+                <div class="card mt-2 ms-4">
+                    <div class="card-body">
+                        <p><strong>{{ reply.author.username }}</strong> <small class="text-muted">{{ reply.created_at }}</small></p>
+                        <p>{{ reply.content }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        {% empty %}
+        <p>Nenhum comentário ainda.</p>
+        {% endfor %}
     </div>
 </div>
-
 {% endblock %}

@@ -1,17 +1,19 @@
-from django.contrib import admin    
-from django.urls import path, include #O include permite importar URL's de outros apps, como articles por exemplo.
-from . import views #importa o views no próprio diretorio para referenciar as URL's
+from django.contrib import admin
+from django.urls import path, include
+from . import views as core_views
+from accounts import views as accounts_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
-from articles import views as articles_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),#Django procura dentro de accounters.urls pela referência accounts, desta forma importando as url de articles de outro arquivo
-    path('articles/', include ('articles.urls')), #Django procura dentro de Articles.urls pela referência articles, desta forma importando as url de articles de outro arquivo
-    path('about/',  views.about), #Dispara a função about do views quando alguem visitar essa URL
-    path('', articles_views.article_list, name="home"), #URL da Homepage. Dispara a função homepage do views quando alguem visitar essa URL
+    path('accounts/', include('accounts.urls')),
+    path('articles/', include('articles.urls')),
+    path('about/', core_views.about, name='about'),
+    path('comments/', include('comments.urls', namespace='comments')),
+    path('', accounts_views.login_view, name="home"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

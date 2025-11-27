@@ -1,24 +1,48 @@
-Descrição da aplicação:
-[Projeto Blog - Desenvolvimento Web Backend AAI.docx](https://github.com/user-attachments/files/23584882/Projeto.Blog.-.Desenvolvimento.Web.Backend.AAI.docx)
+# Projeto Blog — Fumigos
 
+Este repositório contém o projeto Fumigos, desenvolvido como parte da disciplina Desenvolvimento Web Backend (AAI).
+A aplicação é um Blog construído com Django, seguindo arquitetura MVC, boas práticas e padrões modernos de desenvolvimento web.
 
-# Clone o repositório
-git clone git@github.com:guipezzi/Fumigos.git
+# Funcionalidades
 
-# Entre no diretório do projeto
-cd Fumigos
+CRUD completo de artigos
 
-# Crie o ambiente virtual
-python -m venv venv
+Sistema de usuários
 
-# Ative o ambiente virtual (Linux / macOS)
-source venv/bin/activate
+Autenticação (login/logout)
 
-# Para Windows use:
-# venv\Scripts\activate
+Área administrativa
 
-# Instale as dependências
-pip install -r requirements.txt
+Templates organizados
 
-# Rode o servidor Django
-python manage.py runserver
+Uso de models, views e URLs estruturadas
+
+## Instalação
+
+Clone o repositório
+
+```bash
+    git clone git@github.com:guipezzi/Fumigos.git
+```
+
+Entre no diretório do projeto
+
+```bash
+    cd Fumigos
+```
+Crie o ambiente virtual(Linux / macOS)
+```bash
+    python -m venv venv
+```
+Para Windows use:
+```bash
+    venv\Scripts\activate
+```
+Instale as dependências
+```bash
+  pip install -r requirements.txt
+```
+Rode o servidor Django
+```bash
+    python manage.py runserver
+```
